@@ -1,0 +1,14 @@
+<launch>
+
+    <arg name="coverage" default="false"/>
+    <arg name="pythontest_launch_prefix" value="$(eval 'python-coverage run -p' if arg('coverage') else '')"/>
+
+    <node pkg="number_counter" name="add_two_ints_server" type="add_two_ints_server_node.py"
+          launch-prefix="$(arg pythontest_launch_prefix)"/>
+    <!-- <node pkg="number_counter" name="client_node" type="add_two_ints_client_node.py"
+          launch-prefix="$(arg pythontest_launch_prefix)" /> -->
+
+    <test time-limit="10" test-name="sample_rostest" pkg="number_counter" type="sample_rostest.py"
+          launch-prefix="$(arg pythontest_launch_prefix)" />
+
+</launch>
