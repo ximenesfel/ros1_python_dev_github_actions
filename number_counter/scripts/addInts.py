@@ -10,7 +10,7 @@ class AddInts:
         rospy.loginfo("Add two ints has been started ...")
 
     
-    def handle_add_two_ints(req):
+    def handle_add_two_ints(self, req):
 
         result = req.a + req.b
         rospy.loginfo("Sum of" + str(req.a) + " and " + str(req.b) + " is: " + str(result))
