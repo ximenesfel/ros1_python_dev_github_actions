@@ -10,7 +10,7 @@ jobs:
         run: |
           cd / && ./ros_entrypoint.sh
           apt-get update
-          apt-get install -y ros-melodic-rospy-tutorials curl lcov python-coverage python-pip ros-melodic-genpy
+          apt-get install -y ros-melodic-rospy-tutorials curl lcov python-coverage python-pip ros-melodic-genpy ros-melodic-code-coverage
           pip install --upgrade pip
           pip install pyyaml rospkg --ignore-installed
 
@@ -19,6 +19,7 @@ jobs:
           mkdir -p ~/catkin_ws/src
           cd ~/catkin_ws
           /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make"
+
       - name: Build package and run unit test
         run: |
           cd ~/catkin_ws/src
