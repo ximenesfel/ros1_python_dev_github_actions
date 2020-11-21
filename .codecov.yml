@@ -2,7 +2,7 @@
 # --------------
 # which folders/files to ignore
 fixes:
-  - "number_counter/::"
+  - "src/number_counter/::"
 
 ignore:
   - "*/**/test/*"  # ignore package test directories
