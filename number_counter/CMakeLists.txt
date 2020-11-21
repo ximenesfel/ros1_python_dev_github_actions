@@ -10,6 +10,7 @@ project(number_counter)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
+  roslint
 )
 
 ## System dependencies are found with CMake's conventions
@@ -112,6 +113,8 @@ if (CATKIN_ENABLE_TESTING AND ENABLE_COVERAGE_TESTING)
   find_package(code_coverage REQUIRED)
   APPEND_COVERAGE_COMPILER_FLAGS()
 endif()
+
+roslint_python()
 
 ###########
 ## Build ##

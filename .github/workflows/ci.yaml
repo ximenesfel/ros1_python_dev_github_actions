@@ -10,7 +10,7 @@ jobs:
         run: |
           cd / && ./ros_entrypoint.sh
           apt-get update
-          apt-get install -y ros-melodic-rospy-tutorials curl lcov python-coverage python-pip ros-melodic-genpy ros-melodic-code-coverage
+          apt-get install -y ros-melodic-rospy-tutorials curl lcov python-coverage python-pip ros-melodic-genpy ros-melodic-code-coverage ros-melodic-roslint
           pip install --upgrade pip
           pip install pyyaml rospkg --ignore-installed
 
@@ -25,6 +25,7 @@ jobs:
           cd ~/catkin_ws/src
           cp -r $GITHUB_WORKSPACE .
           cd ~/catkin_ws
+          /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make roslint_number_counter"
           /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make run_tests_number_counter -DENABLE_COVERAGE_TESTING=ON"
           mkdir -p ~/coverage
           cp ~/.ros/.coverage* ~/coverage
