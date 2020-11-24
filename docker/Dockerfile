@@ -3,7 +3,7 @@ FROM ros:melodic-ros-base
 RUN echo "source /opt/ros/melodic/setup.bash" >> /root/.bashrc
 
 RUN apt update && \
-    apt install -y  ros-melodic-rospy-tutorials ros-melodic-genpy lcov python-coverage python-pip ros-melodic-code-coverage ros-melodic-roslint
+    apt install -y  ros-melodic-rospy-tutorials ros-melodic-genpy curl lcov python-coverage python-pip ros-melodic-code-coverage ros-melodic-roslint
 
 RUN pip install --upgrade pip
 RUN pip install pyyaml rospkg pylint --ignore-installed
