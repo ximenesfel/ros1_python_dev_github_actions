@@ -3,30 +3,31 @@ on: [push]
 jobs:    
   build:
     runs-on: ubuntu-18.04
-    container: ros:melodic-ros-base
+    container: 
+      image: docker.pkg.github.com/ximenesfel/ros1_python_dev_github_actions/docker:1.0.0
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.ghcr_token }}
     steps:
-      - uses: actions/checkout@v1
-      - name: Install catkin & package dependencies
-        run: |
-          cd / && ./ros_entrypoint.sh
-          apt-get update
-          apt-get install -y ros-melodic-rospy-tutorials curl lcov python-coverage python-pip ros-melodic-genpy ros-melodic-code-coverage ros-melodic-roslint
-          pip install --upgrade pip
-          pip install pyyaml rospkg --ignore-installed
+      - uses: actions/checkout@v2
 
-      - name: Setup catkin workspace
+      - name: Build code
         run: |
-          mkdir -p ~/catkin_ws/src
-          cd ~/catkin_ws
-          /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make"
-
-      - name: Build package and run unit test
-        run: |
-          cd ~/catkin_ws/src
+          mkdir ~/app
+          cd ~/app
+          mkdir -p ~/app/catkin_ws/src
+          cd ~/app/catkin_ws/src
           cp -r $GITHUB_WORKSPACE .
-          cd ~/catkin_ws
+          cd ~/app/catkin_ws/src/ros1_python_dev_github_actions
+          cp -r * ..
+          cd ~/app/catkin_ws/src/
+          rm -r ros1_python_dev_github_actions
+          cd ~/app/catkin_ws/
           /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make roslint_number_counter"
           /bin/bash -c "source /opt/ros/melodic/setup.bash && catkin_make run_tests_number_counter -DENABLE_COVERAGE_TESTING=ON"
+
+      - name: Run code coverage
+        run: |
           mkdir -p ~/coverage
           cp ~/.ros/.coverage* ~/coverage
           cd ~/coverage
